@@ -1,0 +1,9 @@
+Django
+psycopg2-binary
+ipython
+APScheduler
+pytz
+pytils
+pillow
+redis
+python-dotenv

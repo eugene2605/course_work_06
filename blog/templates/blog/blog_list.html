@@ -1,0 +1,40 @@
+{% extends 'mailings/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-8">Блог</h1>
+</div>
+
+<div class="container">
+    {% for object in object_list %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ object.image|mediapath }}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title px-5">
+                            <a href = "{% url 'blog:view_blog' object.slug %}">{{ object.title|capfirst }}</a>
+                        </h5>
+                        <p class="card-text">
+                            {% autoescape off %}
+                                {{ object.content|truncatechars:210 }}
+                            {% endautoescape %}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-body-secondary">Дата создания: {{ object.date_of_publication }}|</small>
+                            <small class="text-body-secondary">|Количество просмотров: {{ object.views_count }}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% if user.is_staff %}
+<div class="d-grid gap-2 col-6 mx-auto">
+    <a class="p-2 btn btn-outline-success" href="{% url 'blog:create_blog' %}">Добавить новую статью</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+    <h3 class="text-center">{{ object.title|capfirst }}</h3>
+    <div class="text-center px-5">
+        <img style="max-width: 540px;" src="/media/{{ object.image }}" />
+    </div>
+    {% autoescape off %}
+        {{ object.content }}
+    {% endautoescape %}
+    <p></p>
+    <p class="px-2">Дата создания: {{ object.date_of_publication }}</p>
+    <p class="px-2">Количество просмотров: {{object.views_count }}</p>
+    {% if user.is_staff %}
+    <div class="py-4 text-center">
+        <a class="p-2 btn btn-outline-success" href="{% url 'blog:edit_blog' object.slug %}">Редактировать статью</a>
+        <a class="p-2 btn btn-outline-danger" href="{% url 'blog:delete_blog' object.slug %}">Удалить статью</a>
+    </div>
+    {% endif %}
+{% endblock %}
